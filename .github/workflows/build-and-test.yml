@@ -18,7 +18,7 @@ jobs:
       - name: Install Swift              
         uses: slashmo/install-swift@v0.4.0
         with:
-          version: 5.10
+          version: "5.10"
       - name: Get swift version
         run: swift --version
       - uses: actions/checkout@v4
