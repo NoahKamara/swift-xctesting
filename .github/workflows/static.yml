@@ -34,7 +34,7 @@ jobs:
       - name: Build
         uses: Didstopia/SwiftAction@v1.0.3
         with:
-          swift-action: "swift package --allow-writing-to-directory ./Documentation.doccarchive generate-documentation --target XCTesting --output-path ./Documentation.doccarchive --transform-for-static-hosting --hosting-base-path XCTesting"
+          swift-action: "package --allow-writing-to-directory ./Documentation.doccarchive generate-documentation --target XCTesting --output-path ./Documentation.doccarchive --transform-for-static-hosting --hosting-base-path XCTesting"
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
