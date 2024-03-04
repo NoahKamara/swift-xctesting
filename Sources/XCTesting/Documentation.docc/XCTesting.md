@@ -7,12 +7,12 @@ Summary
 Text
 
 ## Topics
-- ``<doc:GettingStarted>``
+- <doc:/GettingStarted>
 
 ### Getting Started
 
 
-- ``XCTesting/XCTesting``
+- ``XCTesting/XCTesting()``
 
 
 
