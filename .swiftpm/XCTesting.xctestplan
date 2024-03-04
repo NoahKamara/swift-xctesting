@@ -1,0 +1,32 @@
+{
+  "configurations" : [
+    {
+      "id" : "348D87B3-138C-4504-9D81-9376D7B92C78",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "enabled" : false,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "XCTestingTests",
+        "name" : "XCTestingTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "MacrosTests",
+        "name" : "MacrosTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -6,46 +6,64 @@ import CompilerPluginSupport
 
 let package = Package(
     name: "swift-xctesting",
-    platforms: [.macOS(.v10_15), .iOS(.v13), .tvOS(.v13), .watchOS(.v6), .macCatalyst(.v13)],
+    platforms: [
+        .macOS(.v10_15),
+        .iOS(.v13),
+        .tvOS(.v13),
+        .watchOS(.v6),
+        .macCatalyst(.v13)
+    ],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "swift-xctesting",
-            targets: ["swift-xctesting"]
+            name: "XCTesting",
+            targets: ["XCTesting"]
         ),
         .executable(
-            name: "swift-xctestingClient",
-            targets: ["swift-xctestingClient"]
+            name: "Playground",
+            targets: ["XCTestingPlayground"]
         ),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0"),
+        .package(url: "https://github.com/apple/swift-testing.git", from: "0.5.1"),
+        .package(url: "https://github.com/pointfreeco/swift-macro-testing.git", from: "0.2.2"),
+        .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.1.0")
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
-        // Macro implementation that performs the source transformation of a macro.
         .macro(
-            name: "swift-xctestingMacros",
+            name: "XCTestingMacros",
             dependencies: [
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
                 .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
             ]
         ),
 
-        // Library that exposes a macro as part of its API, which is used in client programs.
-        .target(name: "swift-xctesting", dependencies: ["swift-xctestingMacros"]),
-
-        // A client of the library, which is able to use the macro in its own code.
-        .executableTarget(name: "swift-xctestingClient", dependencies: ["swift-xctesting"]),
-
-        // A test target used to develop the macro implementation.
-        .testTarget(
-            name: "swift-xctestingTests",
+        .target(
+            name: "XCTesting",
             dependencies: [
-                "swift-xctestingMacros",
-                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
+                "XCTestingMacros",
+                .product(name: "Testing", package: "swift-testing")
             ]
         ),
+
+        .executableTarget(name: "XCTestingPlayground", dependencies: ["XCTesting"]),
+
+        .testTarget(
+            name: "XCTestingTests",
+            dependencies: [
+                "XCTesting",
+                .product(name: "Testing", package: "swift-testing")
+            ]
+        ),
+
+        .testTarget(
+            name: "MacrosTests",
+            dependencies: [
+                "XCTestingMacros",
+                .product(name: "MacroTesting", package: "swift-macro-testing"),
+                .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax")
+            ]
+        )
     ]
 )
+
