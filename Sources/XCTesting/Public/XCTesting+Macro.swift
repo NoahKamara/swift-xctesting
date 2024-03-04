@@ -71,8 +71,3 @@ extension Event.Kind: CustomStringConvertible {
         }
     }
 }
-
-
-
-
-
