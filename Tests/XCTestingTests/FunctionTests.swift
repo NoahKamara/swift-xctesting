@@ -8,15 +8,20 @@ func xselfHostedbasic() {
 
 @XCTesting
 @Test
-func xselfHostedthrowing() throws {}
+func xselfHostedThrowing() throws {}
+
+@XCTesting
+@Test(.disabled("Disabled"))
+func xselfHostedDisabled() async {}
+
 
 @XCTesting
 @Test
-func xselfHostedasync() async {}
+func xselfHostedAsync() async {}
 
 @XCTesting
 @Test
-func xselfHostedasyncThrowing() async throws {}
+func xselfHostedAsyncThrowing() async throws {}
 
 @XCTesting
 @Test(arguments: [18, Int.max])
@@ -26,13 +31,13 @@ func xselfHostednamedParam(age: Int) {
 
 @XCTesting
 @Test(arguments: [18, Int.max])
-func xselfHostedunnamedParam(_ age: Int) {
+func xselfHostedUnnamedParam(_ age: Int) {
     #expect(age >= 18)
 }
 
 @XCTesting
 @Test(arguments: [18, Int.max], ["Joe", "Lucy", "Alex"])
-func xselfHostedmultiParam(age: Int, name: String) {
+func xselfHostedMultiParam(age: Int, name: String) {
     #expect(age >= 18)
     #expect(name.count >= 3)
 }

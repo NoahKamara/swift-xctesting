@@ -23,19 +23,6 @@ extension XCTestingMacro {
 
         }
 
-        guard !suite.isSuite else {
-            DiagnosticBuilder(for: declaration)
-                .message("Missing @Suite Attribute")
-                .severity(.warning)
-                .emit(context)
-            
-            return createTestHost(
-                name: suite.name,
-                tests: [],
-                in: context
-            )
-        }
-
         let tests = suite
             .memberBlock
             .members
@@ -83,7 +70,8 @@ protocol SuiteDeclaration {
 extension SuiteDeclaration {
     /// Whether this declaration has an @Suite Attribute
     var isSuite: Bool {
-        attributes.contains(where: { $0.trimmedDescription.starts(with: "@Suite") })
+
+        return attributes.contains(where: { $0.trimmedDescription.starts(with: "@Suite") })
     }
 }
 

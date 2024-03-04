@@ -1,16 +1,12 @@
-import SwiftCompilerPlugin
+//
+//  File.swift
+//  
+//
+//  Created by Noah Kamara on 04.03.24.
+//
+
 import SwiftSyntax
-import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
-
-extension String {
-    func titlecase() -> String {
-        if let first = first?.uppercased() {
-            first+dropFirst()
-        } else { "" }
-    }
-}
-
 
 public struct XCTestingMacro: PeerMacro {
     /// Expands a swift-testing function into a XCTest method
@@ -44,6 +40,9 @@ public struct XCTestingMacro: PeerMacro {
         if effects.asyncSpecifier == nil {
             effects.asyncSpecifier = "async"
         }
+        if effects.throwsSpecifier == nil {
+            effects.throwsSpecifier = "throws"
+        }
 
         decl.signature.effectSpecifiers = effects
 
@@ -59,16 +58,17 @@ public struct XCTestingMacro: PeerMacro {
 
         if let suite {
             decl.body = .init(statements: [
-                "await Tests.run(suite: \(suite.name.trimmed).self, test: \"\(raw: testFuncID)\", in: self)"
+                "try await TestScaffold.run(suite: \(suite.name.trimmed).self, testName: \"\(raw: testFuncID)\", hostedBy: self)"
             ])
         } else {
             decl.body = .init(statements: [
-                "await Tests.run(suite: nil, test: \"\(raw: testFuncID)\", in: self)"
+                "try await TestScaffold.run(testName: \"\(raw: testFuncID)\", hostedBy: self)"
             ])
         }
 
         return decl
     }
+
     
     /// Create XCTestCase host
     /// - Parameters:
@@ -126,9 +126,11 @@ public struct XCTestingMacro: PeerMacro {
     }
 }
 
-@main
-struct swift_xctestingPlugin: CompilerPlugin {
-    let providingMacros: [Macro.Type] = [
-        XCTestingMacro.self
-    ]
+
+extension String {
+    func titlecase() -> String {
+        if let first = first?.uppercased() {
+            first+dropFirst()
+        } else { "" }
+    }
 }

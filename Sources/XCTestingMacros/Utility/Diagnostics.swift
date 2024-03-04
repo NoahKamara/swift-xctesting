@@ -2,7 +2,6 @@ import Foundation
 import SwiftDiagnostics
 import SwiftSyntax
 
-/// > Modified Version from: https://github.com/DougGregor/swift-macro-examples/blob/f61ac7cdca8dc3557e53f86e7e03df1353908d3e/MacroExamplesPlugin/Diagnostics.swift
 /// A simple diagnostic with a message, id, and severity.
 struct SimpleDiagnosticMessage: DiagnosticMessage, Error {
     /// The human-readable message.

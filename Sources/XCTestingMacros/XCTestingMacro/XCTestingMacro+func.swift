@@ -41,10 +41,6 @@ extension XCTestingMacro {
             return host
         }
 
-
-
         return host
     }
-
-
 }

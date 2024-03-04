@@ -15,7 +15,11 @@ final class SuiteTests: XCTestCase {
     func testEmptySuite() {
         assertMacro {
             suiteWrapper(TestFunction.basic)
-        } } expansion: {
+        } diagnostics: {
+            """
+
+            """
+        } expansion: {
             """
             @Suite
             struct MyTests {
@@ -24,8 +28,8 @@ final class SuiteTests: XCTestCase {
             }
 
             final class MyTests_XCTest: XCTestCase {
-                func testBasic() async {
-                    await Tests.run(suite: MyTests.self, test: "basic()", in: self)
+                func testBasic() async throws {
+                    try await TestScaffold.run(suite: MyTests.self, testName: "basic()", hostedBy: self)
                 }
             }
             """
@@ -37,13 +41,7 @@ final class SuiteTests: XCTestCase {
             suiteWrapper(TestFunction.async)
         } diagnostics: {
             """
-            @XCTesting
-            ╰─ ⚠️ Missing @Suite Attribute
-            @Suite
-            struct MyTests {
-                @Test
-            	func async() async {}
-            }
+
             """
         } expansion: {
             """
@@ -54,8 +52,8 @@ final class SuiteTests: XCTestCase {
             }
 
             final class MyTests_XCTest: XCTestCase {
-                func testAsync() async {
-                    await Tests.run(suite: MyTests.self, test: "async()", in: self)
+                func testAsync() async throws {
+                    try await TestScaffold.run(suite: MyTests.self, testName: "async()", hostedBy: self)
                 }
             }
             """
@@ -67,13 +65,7 @@ final class SuiteTests: XCTestCase {
             suiteWrapper(TestFunction.throwing)
         } diagnostics: {
             """
-            @XCTesting
-            ╰─ ⚠️ Missing @Suite Attribute
-            @Suite
-            struct MyTests {
-                @Test
-            	func throwing() throws {}
-            }
+
             """
         } expansion: {
             """
@@ -85,7 +77,7 @@ final class SuiteTests: XCTestCase {
 
             final class MyTests_XCTest: XCTestCase {
                 func testThrowing() async throws {
-                    await Tests.run(suite: MyTests.self, test: "throwing()", in: self)
+                    try await TestScaffold.run(suite: MyTests.self, testName: "throwing()", hostedBy: self)
                 }
             }
             """
@@ -97,13 +89,7 @@ final class SuiteTests: XCTestCase {
             suiteWrapper(TestFunction.asyncThrowing)
         } diagnostics: {
             """
-            @XCTesting
-            ╰─ ⚠️ Missing @Suite Attribute
-            @Suite
-            struct MyTests {
-                @Test
-            	func asyncThrowing() async throws {}
-            }
+
             """
         } expansion: {
             """
@@ -115,7 +101,7 @@ final class SuiteTests: XCTestCase {
 
             final class MyTests_XCTest: XCTestCase {
                 func testAsyncThrowing() async throws {
-                    await Tests.run(suite: MyTests.self, test: "asyncThrowing()", in: self)
+                    try await TestScaffold.run(suite: MyTests.self, testName: "asyncThrowing()", hostedBy: self)
                 }
             }
             """
@@ -128,15 +114,7 @@ final class SuiteTests: XCTestCase {
             suiteWrapper(TestFunction.namedParam)
         } diagnostics: {
             """
-            @XCTesting
-            ╰─ ⚠️ Missing @Suite Attribute
-            @Suite
-            struct MyTests {
-                @Test(arguments: [18, Int.max])
-            	func namedParam(age: Int) {
-            	    #expect(age >= 18)
-            	}
-            }
+
             """
         } expansion: {
             """
@@ -149,8 +127,8 @@ final class SuiteTests: XCTestCase {
             }
 
             final class MyTests_XCTest: XCTestCase {
-                func testNamedParam() async {
-                    await Tests.run(suite: MyTests.self, test: "namedParam(age:)", in: self)
+                func testNamedParam() async throws {
+                    try await TestScaffold.run(suite: MyTests.self, testName: "namedParam(age:)", hostedBy: self)
                 }
             }
             """
@@ -162,15 +140,7 @@ final class SuiteTests: XCTestCase {
             suiteWrapper(TestFunction.unnamedParam)
         }diagnostics: {
             """
-            @XCTesting
-            ╰─ ⚠️ Missing @Suite Attribute
-            @Suite
-            struct MyTests {
-                @Test(arguments: [18, Int.max])
-            	func unnamedParam(_ age: Int) {
-            	    #expect(age >= 18)
-            	}
-            }
+
             """
         } expansion: {
             """
@@ -183,8 +153,8 @@ final class SuiteTests: XCTestCase {
             }
 
             final class MyTests_XCTest: XCTestCase {
-                func testUnnamedParam() async {
-                    await Tests.run(suite: MyTests.self, test: "unnamedParam(_:)", in: self)
+                func testUnnamedParam() async throws {
+                    try await TestScaffold.run(suite: MyTests.self, testName: "unnamedParam(_:)", hostedBy: self)
                 }
             }
             """
@@ -196,16 +166,7 @@ final class SuiteTests: XCTestCase {
             suiteWrapper(TestFunction.multiParam)
         } diagnostics: {
             """
-            @XCTesting
-            ╰─ ⚠️ Missing @Suite Attribute
-            @Suite
-            struct MyTests {
-                @Test(arguments: [18, Int.max], ["Joe", "Lucy", "Alex"])
-            	func multiParam(age: Int, name: String) {
-            	    #expect(age >= 18)
-            	    #expect(name.count >= 3)
-            	}
-            }
+
             """
         } expansion: {
             """
@@ -219,8 +180,8 @@ final class SuiteTests: XCTestCase {
             }
 
             final class MyTests_XCTest: XCTestCase {
-                func testMultiParam() async {
-                    await Tests.run(suite: MyTests.self, test: "multiParam(age:name:)", in: self)
+                func testMultiParam() async throws {
+                    try await TestScaffold.run(suite: MyTests.self, testName: "multiParam(age:name:)", hostedBy: self)
                 }
             }
             """

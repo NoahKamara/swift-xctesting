@@ -3,6 +3,11 @@ import XCTesting
 @XCTesting
 @Suite
 struct SuiteTests {
+    @Test(.disabled("Not Implemented"))
+    func disabled() {
+        #expect(Bool(false))
+    }
+
     @Test
     func basic() {
         #expect(Bool(true))

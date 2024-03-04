@@ -21,8 +21,8 @@ final class FunctionTests: XCTestCase {
             func basic() {}
 
             final class basic_XCTest: XCTestCase {
-                func testBasic() async {
-                    await Tests.run(suite: nil, test: "basic()", in: self)
+                func testBasic() async throws {
+                    try await TestScaffold.run(testName: "basic()", hostedBy: self)
                 }
             }
             """
@@ -38,8 +38,8 @@ final class FunctionTests: XCTestCase {
             func async() async {}
 
             final class async_XCTest: XCTestCase {
-                func testAsync() async {
-                    await Tests.run(suite: nil, test: "async()", in: self)
+                func testAsync() async throws {
+                    try await TestScaffold.run(testName: "async()", hostedBy: self)
                 }
             }
             """
@@ -56,7 +56,7 @@ final class FunctionTests: XCTestCase {
 
             final class throwing_XCTest: XCTestCase {
                 func testThrowing() async throws {
-                    await Tests.run(suite: nil, test: "throwing()", in: self)
+                    try await TestScaffold.run(testName: "throwing()", hostedBy: self)
                 }
             }
             """
@@ -73,7 +73,7 @@ final class FunctionTests: XCTestCase {
 
             final class asyncThrowing_XCTest: XCTestCase {
                 func testAsyncThrowing() async throws {
-                    await Tests.run(suite: nil, test: "asyncThrowing()", in: self)
+                    try await TestScaffold.run(testName: "asyncThrowing()", hostedBy: self)
                 }
             }
             """
@@ -84,7 +84,7 @@ final class FunctionTests: XCTestCase {
     func testNamedParam() {
         assertMacro {
             functionWrapper(TestFunction.namedParam)
-        }expansion: {
+        } expansion: {
             """
             @Test(arguments: [18, Int.max])
             func namedParam(age: Int) {
@@ -92,8 +92,8 @@ final class FunctionTests: XCTestCase {
             }
 
             final class namedParam_XCTest: XCTestCase {
-                func testNamedParam() async {
-                    await Tests.run(suite: nil, test: "namedParam(age:)", in: self)
+                func testNamedParam() async throws {
+                    try await TestScaffold.run(testName: "namedParam(age:)", hostedBy: self)
                 }
             }
             """
@@ -111,8 +111,8 @@ final class FunctionTests: XCTestCase {
             }
 
             final class unnamedParam_XCTest: XCTestCase {
-                func testUnnamedParam() async {
-                    await Tests.run(suite: nil, test: "unnamedParam(_:)", in: self)
+                func testUnnamedParam() async throws {
+                    try await TestScaffold.run(testName: "unnamedParam(_:)", hostedBy: self)
                 }
             }
             """
@@ -131,8 +131,8 @@ final class FunctionTests: XCTestCase {
             }
 
             final class multiParam_XCTest: XCTestCase {
-                func testMultiParam() async {
-                    await Tests.run(suite: nil, test: "multiParam(age:name:)", in: self)
+                func testMultiParam() async throws {
+                    try await TestScaffold.run(testName: "multiParam(age:name:)", hostedBy: self)
                 }
             }
             """

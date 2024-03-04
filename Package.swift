@@ -17,11 +17,7 @@ let package = Package(
         .library(
             name: "XCTesting",
             targets: ["XCTesting"]
-        ),
-        .executable(
-            name: "Playground",
-            targets: ["XCTestingPlayground"]
-        ),
+        )
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0"),
@@ -30,14 +26,6 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.1.0")
     ],
     targets: [
-        .macro(
-            name: "XCTestingMacros",
-            dependencies: [
-                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
-            ]
-        ),
-
         .target(
             name: "XCTesting",
             dependencies: [
@@ -46,8 +34,15 @@ let package = Package(
             ]
         ),
 
-        .executableTarget(name: "XCTestingPlayground", dependencies: ["XCTesting"]),
+        .macro(
+            name: "XCTestingMacros",
+            dependencies: [
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
+            ]
+        ),
 
+        // Integration Tests actively using the library
         .testTarget(
             name: "XCTestingTests",
             dependencies: [
@@ -55,7 +50,8 @@ let package = Package(
                 .product(name: "Testing", package: "swift-testing")
             ]
         ),
-
+        
+        // Macro Tests testing expansio
         .testTarget(
             name: "MacrosTests",
             dependencies: [
