@@ -1,15 +1,24 @@
 name: Swift
 
-on: [push]
-
+on:
+  push:
+    branches:
+      - main
+      - release
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+      - release
 jobs:
   build:
     name: Build & Test
     runs-on: macos-latest
     steps:
-      - uses: swift-actions/setup-swift@cdbe0f7f4c77929b6580e71983e8606e55ffe7e4
+      - name: Install Swift              
+        uses: slashmo/install-swift@v0.4.0
         with:
-          swift-version: 5.10
+          version: 5.10
       - uses: actions/checkout@v4
       - name: Build
         run: swift build
