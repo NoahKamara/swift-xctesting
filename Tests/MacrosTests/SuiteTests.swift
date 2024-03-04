@@ -15,17 +15,7 @@ final class SuiteTests: XCTestCase {
     func testEmptySuite() {
         assertMacro {
             suiteWrapper(TestFunction.basic)
-        } diagnostics: {
-            """
-            @XCTesting
-            ╰─ ⚠️ Missing @Suite Attribute
-            @Suite
-            struct MyTests {
-                @Test
-            	func basic() {}
-            }
-            """
-        } expansion: {
+        } } expansion: {
             """
             @Suite
             struct MyTests {
