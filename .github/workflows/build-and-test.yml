@@ -4,6 +4,7 @@ concurrency:
   group: "quality"
   cancel-in-progress: true
 
+on:
   push:
     branches:
       - main
