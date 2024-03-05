@@ -16,9 +16,9 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Install Swift              
-        uses: swift-actions/setup-swift@v1.26.0
+        uses: slashmo/install-swift@v0.1.0
         with:
-          swift-version: 5.10.0
+          version: "swift-5.10-DEVELOPMENT-SNAPSHOT-2024-03-02-a-osx"
       - name: Get swift version
         run: swift --version
       - uses: actions/checkout@v4
