@@ -1,6 +1,9 @@
 name: Build & Test
 
-on:
+concurrency:
+  group: "quality"
+  cancel-in-progress: true
+
   push:
     branches:
       - main
@@ -13,10 +16,10 @@ on:
 jobs:
   build:
     name: Build & Test
-    runs-on: ubuntu-20.04
+    runs-on: macos-latest
     steps:
-      - name: Install Swift              
-        uses: slashmo/install-swift@v0.1.0
+      - name: Install Swift
+        uses: swift-actions/setup-swift@v1.26.0
         with:
           version: "swift-5.10-DEVELOPMENT-SNAPSHOT-2024-03-02-a"
       - name: Get swift version
