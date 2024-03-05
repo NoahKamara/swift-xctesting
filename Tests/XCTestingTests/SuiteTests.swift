@@ -9,6 +9,13 @@ struct SuiteTests {
     }
 
     @Test
+    func withKnownIssues() {
+        withKnownIssue {
+            #expect(Bool(false))
+        }
+    }
+
+    @Test
     func basic() {
         #expect(Bool(true))
     }

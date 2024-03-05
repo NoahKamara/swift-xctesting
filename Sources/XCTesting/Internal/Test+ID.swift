@@ -37,3 +37,16 @@ extension Test.ID {
         )
     }
 }
+
+extension Test.ID {
+    init(fileID: String, testName: String) {
+        let firstSlash = fileID.firstIndex(of: "/")!
+        let moduleName = String(fileID[..<firstSlash])
+
+        self.init(
+            moduleName: moduleName,
+            nameComponents: [testName],
+            sourceLocation: nil
+        )
+    }
+}

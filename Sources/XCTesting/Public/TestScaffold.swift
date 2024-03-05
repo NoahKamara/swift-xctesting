@@ -53,37 +53,27 @@ public enum TestScaffold {
     ///   - suite: a type  marked with @Suite
     ///   - testName: the name of a function containing a test
     ///   - testCase: The XCTestCase that will host the test
-    public static func run(suite: Any.Type? = nil, testName: String, hostedBy testCase: XCTestCase) async throws {
-        let config = makeConfiguration(suite: suite, testName: testName, testCase: testCase)
-        try await run(configuration: config, hostedBy: testCase)
-    }
-
-
-    /// Create a test configuration
-    /// - Parameters:
-    ///   - suite: a type  marked with @Suite
-    ///   - test: the name of a function containing a test e.g. `testThis(arg1:)`
-    ///   - testCase: The XCTestCase that will host the test
-    static func makeConfiguration(
-        suite: Any.Type?,
+    public static func run(
+        suite: Any.Type? = nil,
         testName: String,
-        testCase: XCTestCase
-    ) -> Configuration {
-        let id = if let suite {
+        hostedBy testCase: XCTestCase,
+        fileID: String = #fileID,
+        filePath: String = #filePath,
+        line: Int = #line,
+        column: Int = #column
+    ) async throws {
+        let testID = if let suite {
             Test.ID(suite: suite, testName: testName)
         } else {
-            Test.ID(
-                moduleName: "",
-                nameComponents: [testName],
-                sourceLocation: nil
-            )
+            Test.ID(fileID: fileID, testName: testName)
         }
 
         var config = Configuration()
-        config.isParallelizationEnabled = false
-        config.testFilter = .init(including: [id])
 
-        return config
+        // Set Filter so that run only contains our test
+        config.testFilter = .init(including: [testID])
+
+        try await run(configuration: config, hostedBy: testCase)
     }
 
 
