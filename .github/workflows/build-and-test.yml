@@ -20,13 +20,17 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Install Swift
-        uses: swift-actions/setup-swift@v1.26.0
+        uses: slashmo/install-swift@v0.1.0
         with:
-          swift-version: 5.9
+          version: 5.9
+          
       - name: Get swift version
         run: swift --version
+      
       - uses: actions/checkout@v4
+      
       - name: Build
         run: swift build
+        
       - name: Run tests
         run: swift test
