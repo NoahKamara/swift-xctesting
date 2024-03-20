@@ -118,8 +118,6 @@ public enum TestScaffold {
             var configuration = configuration
 
             configuration.eventHandler = { event, context in
-                debugEventReporter(event, context)
-
                 continuation.yield((event, context))
             }
 
