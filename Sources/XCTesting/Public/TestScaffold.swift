@@ -69,6 +69,7 @@ public enum TestScaffold {
         }
 
         var config = Configuration()
+        config.isParallelizationEnabled = false
 
         // Set Filter so that run only contains our test
         config.testFilter = .init(including: [testID])
