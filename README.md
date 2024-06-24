@@ -1,5 +1,6 @@
 
 # XCTesting
+> Archived because Xcode 16 supports Swift Testing directly
 
 A Swift Macro for generating XCTest compatible scaffolding around tests written for [swift-testing](https://github.com/apple/swift-testing)
 
